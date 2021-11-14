@@ -20,7 +20,7 @@
         <module>market-collector-rest</module>
         <module>market-collector-api</module>
         <module>market-collector-core</module>
-        <module>market-collector-tick-job</module>
+        <module>market-collector-job-tick</module>
     </modules>
 
     <properties>
