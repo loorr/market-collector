@@ -1,4 +1,4 @@
-package com.tove.web.market.job.util;
+package com.tove.market.job.util;
 
 
 import lombok.extern.slf4j.Slf4j;

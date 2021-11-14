@@ -1,4 +1,4 @@
-package com.tove.web.market.rest;
+package com.tove.market.rest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

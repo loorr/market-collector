@@ -1,4 +1,4 @@
-package com.tove.web.market.api.common;
+package com.tove.market.api.common;
 
 /**
  * @author loorr

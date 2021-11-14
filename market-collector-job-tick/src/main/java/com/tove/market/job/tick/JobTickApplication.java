@@ -1,4 +1,4 @@
-package com.tove.web.market.job.tick;
+package com.tove.market.job.tick;
 
 /**
  * tick 行情收集器

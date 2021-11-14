@@ -1,7 +1,7 @@
-package com.tove.web.market.rest.controller;
+package com.tove.market.rest.controller;
 
 import com.example.common.Response;
-import com.tove.web.market.api.DemoApi;
+import com.tove.market.api.DemoApi;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

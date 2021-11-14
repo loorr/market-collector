@@ -1,4 +1,4 @@
-package com.tove.web.market.job;
+package com.tove.market.job;
 
 import com.xxl.job.core.context.XxlJobHelper;
 import com.xxl.job.core.handler.annotation.XxlJob;

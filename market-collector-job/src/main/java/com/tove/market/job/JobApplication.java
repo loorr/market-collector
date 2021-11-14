@@ -1,4 +1,4 @@
-package com.tove.web.market.job;
+package com.tove.market.job;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

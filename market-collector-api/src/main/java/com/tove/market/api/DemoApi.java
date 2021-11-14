@@ -1,7 +1,7 @@
-package com.tove.web.market.api;
+package com.tove.market.api;
 
 import com.example.common.Response;
-import com.tove.web.market.api.common.Constant;
+import com.tove.market.api.common.Constant;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
