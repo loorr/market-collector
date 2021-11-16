@@ -1,4 +1,4 @@
-package com.tove.market.job.xxlConfig;
+package com.tove.market.job.config;
 
 import com.example.common.IPUtils;
 import com.xxl.job.core.executor.impl.XxlJobSpringExecutor;

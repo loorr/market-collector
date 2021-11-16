@@ -21,12 +21,16 @@
         <module>market-collector-api</module>
         <module>market-collector-core</module>
         <module>market-collector-job-tick</module>
+        <module>market-collector-dao-major</module>
+        <module>market-collector-dao-temp</module>
+        <module>market-collector-common</module>
     </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <spring.cloud-version>2020.0.3</spring.cloud-version>
+        <market-version>1.0-SNAPSHOT</market-version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -40,12 +44,22 @@
             <dependency>
                 <artifactId>market-collector-api</artifactId>
                 <groupId>com.tove</groupId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${market-version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>market-collector-dao-major</artifactId>
+                <groupId>com.tove</groupId>
+                <version>${market-version}</version>
             </dependency>
             <dependency>
                 <groupId>com.spring4all</groupId>
                 <artifactId>swagger-spring-boot-starter</artifactId>
                 <version>1.9.1.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>3.5.4</version>
             </dependency>
 
             <dependency>
