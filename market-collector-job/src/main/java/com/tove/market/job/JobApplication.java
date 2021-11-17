@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
  * @author loorr
  */
 @ComponentScan("com.tove.market")
-@MapperScan({"com.tove.market.dao.major", "com.tove.market.dao.temp"})
+@MapperScan(basePackages = {"com.tove.market.dao.major", "com.tove.market.dao.temp"})
 @SpringBootApplication(scanBasePackages = {"com.tove.market","com.tove.market.dao.major"})
 public class JobApplication {
 

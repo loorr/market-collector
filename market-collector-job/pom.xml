@@ -64,6 +64,10 @@
             <groupId>com.tove</groupId>
         </dependency>
         <dependency>
+            <artifactId>market-collector-dao-temp</artifactId>
+            <groupId>com.tove</groupId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>

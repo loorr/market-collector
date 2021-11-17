@@ -26,5 +26,9 @@
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <artifactId>market-collector-common</artifactId>
+            <groupId>com.tove</groupId>
+        </dependency>
     </dependencies>
 </project>

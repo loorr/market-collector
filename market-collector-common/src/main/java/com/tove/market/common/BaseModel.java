@@ -1,8 +1,11 @@
-package com.tove.market.dao.temp;
+package com.tove.market.common;
+
+import lombok.Data;
 
 import java.util.Date;
 
-public class StockBaseInfo {
+@Data
+public abstract class BaseModel {
     /**
      * id
      */
@@ -17,14 +20,4 @@ public class StockBaseInfo {
      * 更新时间
      */
     private Date dbModifyTime;
-
-    /**
-     * code
-     */
-    private String code;
-
-    /**
-     * name
-     */
-    private String name;
 }

@@ -47,7 +47,17 @@
                 <version>${market-version}</version>
             </dependency>
             <dependency>
+                <artifactId>market-collector-common</artifactId>
+                <groupId>com.tove</groupId>
+                <version>${market-version}</version>
+            </dependency>
+            <dependency>
                 <artifactId>market-collector-dao-major</artifactId>
+                <groupId>com.tove</groupId>
+                <version>${market-version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>market-collector-dao-temp</artifactId>
                 <groupId>com.tove</groupId>
                 <version>${market-version}</version>
             </dependency>

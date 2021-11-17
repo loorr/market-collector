@@ -1,6 +1,7 @@
 package com.tove.market.job.tick.common;
 
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Log4j2
+@Slf4j
 public class HttpClientUtil {
     /**
      * 超时时间

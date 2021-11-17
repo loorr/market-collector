@@ -1,11 +1,10 @@
-package com.tove.market.dao.major;
+package com.tove.market.dao.temp.model;
 
 import com.tove.market.common.BaseModel;
 import lombok.Data;
 
 @Data
-public class StockBaseInfo extends BaseModel {
-
+public class StockInfoACodeName extends BaseModel {
     /**
      * code
      */
