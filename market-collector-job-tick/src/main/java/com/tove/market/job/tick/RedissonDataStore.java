@@ -14,6 +14,7 @@ public class RedissonDataStore {
     public RedissonDataStore(String redisUrl){
         Config config = new Config();
         config.useSingleServer()
+                //.setDatabase(1)
                 .setAddress("redis://" + redisUrl);
         config.setCodec(new StringCodec());
 

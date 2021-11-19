@@ -1,5 +1,6 @@
 package com.tove.market.job.tick.task;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
@@ -17,14 +18,26 @@ public class SnapshotProducer implements Runnable{
     public void run() {
         while (true){
             long startTime = System.currentTimeMillis();
+            List<Long> timer = new ArrayList<>();
             for (TaskExecutor taskExecutor: taskExecutors){
+                long startTime1 = System.currentTimeMillis();
                 List<StockSnapshot> stockSnapshots = taskExecutor.getStockSnapshot();
-                for (int i = 0; i < stockSnapshots.size(); i++) {
-                    queue.offer(stockSnapshots.get(i));
+                if (stockSnapshots == null){
+                    continue;
                 }
+                for (StockSnapshot stockSnapshot : stockSnapshots) {
+                    queue.offer(stockSnapshot);
+                }
+                long endTime2 = System.currentTimeMillis();
+                timer.add(endTime2-startTime1);
             }
             long endTime = System.currentTimeMillis();
-            System.out.println(Thread.currentThread().getName() + " : " + "time: " + (endTime-startTime) + " size: " + queue.size());
+            //if (endTime-startTime>200){
+                System.out.println(Thread.currentThread().getName() + " : " + "time: " + (endTime-startTime)
+                        + " size: " + queue.size() + " " + timer);
+            //}
         }
     }
+
+
 }

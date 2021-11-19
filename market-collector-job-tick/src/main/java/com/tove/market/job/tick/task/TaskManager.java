@@ -1,14 +1,17 @@
 package com.tove.market.job.tick.task;
 import com.tove.market.job.tick.ThreadPoolProducer;
 import com.tove.market.job.tick.service.RedisService;
+import lombok.SneakyThrows;
 
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import static java.lang.Thread.sleep;
+
 public class TaskManager implements Runnable {
-    public static final Integer TASK_MAX_COMPANY_NUMBER = 30;
+    public static final Integer TASK_MAX_COMPANY_NUMBER = 50;
     private final Integer CONSUMER_NUMBER = 20;
     private final Integer PRODUCER_ITEM_NUMBER = 30;
 
@@ -43,12 +46,16 @@ public class TaskManager implements Runnable {
         }
     }
 
+    @SneakyThrows
     private void initProducer(){
         int totalNum = this.taskExecutors.size();
         int startIndex = 0;
         while (true){
             List<TaskExecutor> subTaskList = taskExecutors.subList(startIndex, Math.min(totalNum, startIndex + PRODUCER_ITEM_NUMBER));
+
             SnapshotProducer snapshotProducer = new SnapshotProducer(queue, subTaskList);
+            System.out.println("init producer: " + subTaskList.size());
+            sleep(50);
             producerList.add(snapshotProducer);
             if (startIndex+PRODUCER_ITEM_NUMBER >= totalNum){
                 break;

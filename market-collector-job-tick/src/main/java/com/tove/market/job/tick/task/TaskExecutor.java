@@ -5,6 +5,7 @@ import com.tove.market.job.tick.common.HttpClientUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import static jodd.util.ThreadUtil.sleep;
@@ -12,12 +13,26 @@ import static jodd.util.ThreadUtil.sleep;
 public class TaskExecutor {
     private static final String BASE_URL = "http://api.money.126.net/data/feed/";
     private final String taskUrl;
+    private Date date;
+    public String name;
 
     public TaskExecutor(List<String> companyList){
         this.taskUrl = getTaskUrl(companyList);
     }
 
+    private Boolean checkCanGet(){
+        if (date == null){
+            date = new Date();
+            return true;
+        }
+        return new Date().getTime() - date.getTime() >= 3 * 1000;
+    }
+
     public List<StockSnapshot> getStockSnapshot(){
+        if (!checkCanGet()){
+            return null;
+        }
+
         String data = HttpClientUtil.doGet(this.taskUrl);
         String removeBracket = patternContent(data);
         JSONObject jsonObject = (JSONObject) JSONObject.parse(removeBracket);
@@ -35,6 +50,9 @@ public class TaskExecutor {
     private String getTaskUrl(List<String> companyList){
         final StringBuffer sb = new StringBuffer(companyList.size()*8);
         for (String symbol: companyList) {
+            if (name == null){
+                name = symbol;
+            }
             if (symbol.charAt(0) == '6'){
                 sb.append("0" + symbol);
             }else if (symbol.charAt(0) == '0' || symbol.charAt(0) == '3'){

@@ -17,7 +17,10 @@ public class RedissonConfig {
     @Bean(name = "collectorRedissonClient", destroyMethod = "shutdown")
     public RedissonClient redissonClient() {
         Config config = new Config();
-        config.useSingleServer().setAddress("redis://" + redisUrl);
+        config.useSingleServer()
+            .setAddress("redis://" + redisUrl)
+            .setDatabase(0)
+        ;
         config.setCodec(new StringCodec());
         return Redisson.create(config);
     }
