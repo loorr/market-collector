@@ -14,37 +14,24 @@ public class StockSnapshot implements Serializable {
 
     private String arrow;
 
-
     private Double ask1;
-
     private Double ask2;
-
     private Double ask3;
-
     private Double ask4;
-
     private Double ask5;
 
 
     private Integer askvol1;
-
     private Integer askvol2;
-
     private Integer askvol3;
-
     private Integer askvol4;
-
     private Integer askvol5;
 
 
     private Double bid1;
-
     private Double bid2;
-
     private Double bid3;
-
     private Double bid4;
-
     private Double bid5;
 
     private Integer bidvol1;
