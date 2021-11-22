@@ -15,9 +15,9 @@ import static java.lang.Thread.sleep;
 @Log4j2
 public class TaskManager implements Runnable {
     /** 每个TaskExecutor最大的公司数量, 也就是一个人url的公司数量 */
-    public static final Integer TASK_MAX_COMPANY_NUMBER = 50;
+    public static final Integer TASK_MAX_COMPANY_NUMBER = 40;
     /** 消费者数量*/
-    private final Integer CONSUMER_NUMBER = 1;
+    private final Integer CONSUMER_NUMBER = 2;
     /** 每个生产者的 TaskExecutor 数量 */
     private final Integer PRODUCER_ITEM_NUMBER = 6;
 
@@ -58,18 +58,21 @@ public class TaskManager implements Runnable {
     private void initProducer(){
         int totalNum = this.taskExecutors.size();
         int startIndex = 0;
+
         while (true){
             List<TaskExecutor> subTaskList = taskExecutors.subList(startIndex, Math.min(totalNum, startIndex + PRODUCER_ITEM_NUMBER));
 
-            SnapshotProducer snapshotProducer = new SnapshotProducer(queue, subTaskList);
+            SnapshotProducer snapshotProducer = new SnapshotProducer(String.valueOf(startIndex), timeMonitor, queue, subTaskList);
             System.out.println("init producer: " + subTaskList.size());
-            sleep(100);
             producerList.add(snapshotProducer);
+
+            sleep(100);
             if (startIndex+PRODUCER_ITEM_NUMBER >= totalNum){
                 break;
             }
             startIndex += PRODUCER_ITEM_NUMBER;
         }
+        timeMonitor.setTotalProducerNum(producerList.size());
     }
 
     private List<TaskExecutor> taskExecutorProducer(){
@@ -94,9 +97,18 @@ public class TaskManager implements Runnable {
             sleep(300);
             consumerExecutorPool.execute(consumer);
         }
-        for (SnapshotProducer producer: producerList){
+        while (true){
+            for (SnapshotProducer producer: producerList){
+                //System.out.println("before start : " + producer.getName());
+                if (!producer.checkCanGet()){
+                    continue;
+                }
+                // sleep(700/producerList.size());
+                //System.out.println("start : " + producer.getName());
+                producerExecutorPool.execute(producer);
+            }
             sleep(300);
-            producerExecutorPool.execute(producer);
         }
+
     }
 }

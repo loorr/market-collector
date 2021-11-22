@@ -32,8 +32,9 @@ public class JobTickApplication implements LifeCycle {
 
         RedisService redisService = content.getRedisService();
         List<String> symbolList = new ArrayList<>();
-        symbolList.addAll(redisService.getSHCompanysSymbol());
+
         symbolList.addAll(redisService.getSZCompanysSymbol());
+        symbolList.addAll(redisService.getSHCompanysSymbol());
 
         log.info(" List Size: {}", symbolList.size());
         TaskManager sZTaskManager = new TaskManager(symbolList, redisService);

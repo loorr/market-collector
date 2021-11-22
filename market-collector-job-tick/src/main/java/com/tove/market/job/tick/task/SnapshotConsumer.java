@@ -12,9 +12,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class SnapshotConsumer implements Runnable{
-    public final static ConcurrentHashMap<String, StockSnapshot> lastTickMap = new ConcurrentHashMap(5000);
-    public final static ConcurrentHashMap<String, List<StockSnapshot>> tempSnapshot = new ConcurrentHashMap<>();
-
+    public volatile static ConcurrentHashMap<String, StockSnapshot> lastTickMap = new ConcurrentHashMap(5000);
+    public volatile static  ConcurrentHashMap<String, List<StockSnapshot>> tempSnapshot = new ConcurrentHashMap<>(5000);
+    public final static Integer batchSize = 1;
     private volatile boolean isRunning = true;
     private final BlockingQueue<StockSnapshot> queue;
     private final RedisService redisService;
@@ -31,19 +31,22 @@ public class SnapshotConsumer implements Runnable{
             while (isRunning) {
                 StockSnapshot item = queue.take();
 
-                if (!canStore(item)){
+                boolean sign = canStore(item);
+                if (!sign){
                     continue;
                 }
+                lastTickMap.put(item.getCode(), item);
 
                 String code = item.getCode();
-                if (!tempSnapshot.containsKey(code)){
-                    tempSnapshot.put(code,  Collections.synchronizedList(new ArrayList<>(10)));
-                }
-                List<StockSnapshot> list = tempSnapshot.get(code);
+
+                List<StockSnapshot> list = tempSnapshot.getOrDefault(code, Collections.synchronizedList(new ArrayList<>(batchSize)));
                 list.add(item);
-                lastTickMap.put(item.getCode(), item);
-                if (list.size() == 10){
-                    tempSnapshot.put(code,  Collections.synchronizedList(new ArrayList<>(10)));
+                tempSnapshot.put(code,list);
+
+
+                if (list.size() >= batchSize){
+
+                    tempSnapshot.put(code,  Collections.synchronizedList(new ArrayList<>(batchSize)));
                     redisService.addStockSnapShot(list);
                 }
             }
@@ -59,7 +62,8 @@ public class SnapshotConsumer implements Runnable{
     private boolean canStore(StockSnapshot item){
         if (lastTickMap.containsKey(item.getCode())){
             StockSnapshot lastSsp = lastTickMap.get(item.getCode());
-            if (lastSsp.equals(item)){
+            System.out.println(item.getCode() + " " + item.getSymbol() + " " + lastSsp.getTime() + " " + item.getTime());
+            if (lastSsp.getTime().equals(item.getTime())){
                 return false;
             }
         }

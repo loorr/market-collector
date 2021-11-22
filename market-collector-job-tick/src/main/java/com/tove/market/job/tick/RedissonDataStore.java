@@ -17,6 +17,8 @@ public class RedissonDataStore {
                 //.setDatabase(1)
                 .setAddress("redis://" + redisUrl);
         config.setCodec(new StringCodec());
+        config.setThreads(4);
+        config.setNettyThreads(4);
 
         redissonClient = Redisson.create(config);
     }

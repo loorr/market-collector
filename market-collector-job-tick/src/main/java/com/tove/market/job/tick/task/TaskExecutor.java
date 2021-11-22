@@ -5,11 +5,10 @@ import com.tove.market.job.tick.common.HttpClientUtil;
 import com.tove.market.job.tick.model.StockSnapshot;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static jodd.util.ThreadUtil.sleep;
+
 
 public class TaskExecutor {
     private static final String BASE_URL = "http://api.money.126.net/data/feed/";
@@ -36,7 +35,6 @@ public class TaskExecutor {
         if (!checkCanGet()){
             return null;
         }
-        //System.out.println("c " + lastTime);
         lastTime.set(System.currentTimeMillis());
         String data = HttpClientUtil.doGet(this.taskUrl);
         String removeBracket = patternContent(data);
@@ -65,7 +63,7 @@ public class TaskExecutor {
             }
             sb.append(",");
         }
-        return BASE_URL + sb.toString();
+        return BASE_URL + sb;
     }
 
     private String patternContent(String input){

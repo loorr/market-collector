@@ -12,8 +12,8 @@ public class ThreadPoolProducer {
 
     public static ThreadPoolExecutor produceMainTheadPool(){
         return new ThreadPoolExecutor(
-                16,
-                16,
+                6,
+                6,
                 KEEP_ALIVE_TIME,
                 TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(QUEUE_CAPACITY),
@@ -22,8 +22,8 @@ public class ThreadPoolProducer {
 
     public static ThreadPoolExecutor produceCusumerTheadPool(){
         return new ThreadPoolExecutor(
-                16,
-                16,
+                2,
+                2,
                 KEEP_ALIVE_TIME,
                 TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(QUEUE_CAPACITY),

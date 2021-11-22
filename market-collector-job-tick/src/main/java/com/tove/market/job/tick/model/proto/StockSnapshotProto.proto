@@ -1,9 +1,31 @@
 syntax = "proto3";
 package com.tove.market.job.tick.model;
-option java_outer_classname="StockSnapshotProto";
+option java_outer_classname="SnapshotProto";
 
-message SSnapshotProto {
-  string name = 1;
-  string mobile = 2;
-  string sex = 3;
+message Tick {
+  OrderBook orderBook = 1;
+  string arrow = 2;
+  string type = 3;
+  string name = 4;
+  string symbol = 5;
+  string code = 6;
+  string time = 7;
+  double high = 8;
+  double low = 9;
+  double open = 10;
+  double yestclose = 11;
+  int64 turnover = 12;
+  int64 volume = 13;
+  double percent = 14;
+  double price = 15;
+  int32 status = 16;
+  string update = 17;
+  double updown = 18;
+}
+
+message OrderBook {
+  repeated double bid = 1;
+  repeated double ask = 2;
+  repeated double askVol = 3;
+  repeated double bidVol = 4;
 }
