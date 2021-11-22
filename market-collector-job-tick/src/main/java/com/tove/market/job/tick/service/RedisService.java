@@ -1,15 +1,11 @@
 package com.tove.market.job.tick.service;
 
-import com.tove.market.job.tick.task.StockSnapshot;
-import jodd.util.CollectionUtil;
+import com.tove.market.job.tick.model.StockSnapshot;
 import org.redisson.api.RQueue;
 import org.redisson.api.RSet;
 import org.redisson.api.RedissonClient;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static com.tove.market.common.Constant.*;
 
@@ -37,7 +33,7 @@ public class RedisService {
             return;
         }
         String[] dateTime = snapshot.getTime().split("\\s+");
-        String key = getKey(TICK_SYMBOL_DATE, snapshot.getCode(), dateTime[0]);
+        String key = getKey(TICK_DATE_SYMBOL,  dateTime[0], snapshot.getCode());
         RQueue<StockSnapshot> rQueue = redisClient.getQueue(key);
         rQueue.add(snapshot);
     }
@@ -48,8 +44,14 @@ public class RedisService {
         }
         StockSnapshot ssp = stockSnapshotList.get(0);
         String[] dateTime = ssp.getTime().split("\\s+");
-        String key = getKey(TICK_SYMBOL_DATE, ssp.getCode(), dateTime[0]);
+        String key = getKey(TICK_DATE_SYMBOL,  dateTime[0], ssp.getCode());
         RQueue<StockSnapshot> rQueue = redisClient.getQueue(key);
         rQueue.addAll(stockSnapshotList);
+    }
+
+    // TODO
+    public List<StockSnapshot> getAllLastSnapshot(){
+        //
+        return null;
     }
 }

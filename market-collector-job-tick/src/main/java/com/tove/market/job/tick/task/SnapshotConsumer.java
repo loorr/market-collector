@@ -1,5 +1,6 @@
 package com.tove.market.job.tick.task;
 
+import com.tove.market.job.tick.model.StockSnapshot;
 import com.tove.market.job.tick.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 

@@ -6,6 +6,7 @@ import com.tove.market.job.tick.task.TaskManager;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,9 +15,11 @@ import java.util.List;
 @Log4j2
 public class JobTickApplication implements LifeCycle {
 
-    private final TickApplicationContent content= new TickApplicationContent();
+    private final TickApplicationContent content;
 
-    public JobTickApplication(){}
+    public JobTickApplication(){
+        content = new TickApplicationContent();
+    }
 
     public static void main(String[] args) {
         JobTickApplication jobTickApplication = new JobTickApplication();
@@ -25,11 +28,14 @@ public class JobTickApplication implements LifeCycle {
 
     @Override
     public void start() {
+        log.info("start {}" ,new Date());
+
         RedisService redisService = content.getRedisService();
         List<String> symbolList = new ArrayList<>();
         symbolList.addAll(redisService.getSHCompanysSymbol());
         symbolList.addAll(redisService.getSZCompanysSymbol());
-        System.out.println(" List Size: " + symbolList.size());
+
+        log.info(" List Size: {}", symbolList.size());
         TaskManager sZTaskManager = new TaskManager(symbolList, redisService);
         content.getMainThreadPool().execute(sZTaskManager);
     }

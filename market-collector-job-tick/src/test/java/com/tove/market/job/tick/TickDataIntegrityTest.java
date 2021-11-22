@@ -1,9 +1,8 @@
 package com.tove.market.job.tick;
 
 import com.tove.market.job.tick.common.ToStringUtils;
-import com.tove.market.job.tick.task.StockSnapshot;
+import com.tove.market.job.tick.model.StockSnapshot;
 import org.junit.jupiter.api.*;
-import org.junit.platform.commons.util.CollectionUtils;
 import org.redisson.api.RQueue;
 import org.redisson.api.RSet;
 import org.redisson.api.RedissonClient;
@@ -17,7 +16,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.tove.market.common.Constant.*;
-import static com.tove.market.common.Constant.TICK_SYMBOL_DATE;
 import static com.tove.market.job.tick.TickApplicationConfig.REDIS_URL;
 
 @DisplayName("Tick完整性测试")
@@ -78,6 +76,7 @@ public class TickDataIntegrityTest {
         StockSnapshot frist = sspList.get(0);
         Date prev = parseDate(frist.getTime());
 
+        int missNum = 0;
         for (int i = 1; i < sspList.size(); i++) {
             StockSnapshot item = sspList.get(i);
             if (!item.getCode().equals(code)){
@@ -91,13 +90,14 @@ public class TickDataIntegrityTest {
             if (timeDiff == 0){
                 System.out.println("时间重复: " + i + code);
             }
-            if (timeDiff > 7*1000){
+            if (timeDiff > 6*1000){
+                missNum ++;
                 System.out.println("消息丢失: "+ i + " "  + code + " 间隔: " + timeDiff/1000);
             }
             frist = item;
             prev = curr;
         }
-        System.out.println("检查完成: " + code);
+         System.out.println("检查完成: " + code + " mgs: " + missNum + " - "+ sspList.size());
     }
 
     private long getTimeDiff(Date prev, Date after){
@@ -124,7 +124,7 @@ public class TickDataIntegrityTest {
         List<String> symbolList = new ArrayList<>(symbolSet);
         int index = 0;
         for(String symbol: symbolList){
-            String key = getKey(TICK_SYMBOL_DATE, getCode(symbol), "2021/11/18");
+            String key = getKey(TICK_DATE_SYMBOL,  "2021/11/19", getCode(symbol));
             RQueue<String> rQueue = redissonClient.getQueue(key);
             List<String> stockSnapshotList = rQueue.readAll();
             List<StockSnapshot> sspList = stockSnapshotList.stream().map(o->{

@@ -1,4 +1,4 @@
-package com.tove.market.job.tick.task;
+package com.tove.market.job.tick.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +25,7 @@ public class StockSnapshot implements Serializable {
     private Integer askvol3;
     private Integer askvol4;
     private Integer askvol5;
+    private Double bid1;
     private Double bid2;
     private Double bid3;
     private Double bid4;

@@ -1,0 +1,9 @@
+syntax = "proto3";
+package com.tove.market.job.tick.model;
+option java_outer_classname="StockSnapshotProto";
+
+message SSnapshotProto {
+  string name = 1;
+  string mobile = 2;
+  string sex = 3;
+}

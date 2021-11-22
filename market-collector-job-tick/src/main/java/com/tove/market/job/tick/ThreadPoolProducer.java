@@ -12,8 +12,8 @@ public class ThreadPoolProducer {
 
     public static ThreadPoolExecutor produceMainTheadPool(){
         return new ThreadPoolExecutor(
-                8,
-                8,
+                16,
+                16,
                 KEEP_ALIVE_TIME,
                 TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(QUEUE_CAPACITY),
@@ -28,5 +28,11 @@ public class ThreadPoolProducer {
                 TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(QUEUE_CAPACITY),
                 new ThreadPoolExecutor.CallerRunsPolicy());
+    }
+
+
+    public static ScheduledExecutorService produceScheduleTheadPool(){
+        ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(2);
+        return scheduledThreadPool;
     }
 }

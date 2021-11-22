@@ -1,32 +1,38 @@
 package com.tove.market.job.tick.task;
 import com.tove.market.job.tick.ThreadPoolProducer;
+import com.tove.market.job.tick.TimeMonitor;
+import com.tove.market.job.tick.model.StockSnapshot;
 import com.tove.market.job.tick.service.RedisService;
 import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
-
 import static java.lang.Thread.sleep;
 
+@Log4j2
 public class TaskManager implements Runnable {
+    /** 每个TaskExecutor最大的公司数量, 也就是一个人url的公司数量 */
     public static final Integer TASK_MAX_COMPANY_NUMBER = 50;
-    private final Integer CONSUMER_NUMBER = 20;
-    private final Integer PRODUCER_ITEM_NUMBER = 30;
+    /** 消费者数量*/
+    private final Integer CONSUMER_NUMBER = 1;
+    /** 每个生产者的 TaskExecutor 数量 */
+    private final Integer PRODUCER_ITEM_NUMBER = 6;
 
     private final Set<String> symbolSet;
     private final List<TaskExecutor> taskExecutors;
     private final RedisService redisService;
-    private final ThreadPoolExecutor executorPool;
+    private final ThreadPoolExecutor producerExecutorPool;
     private final ThreadPoolExecutor consumerExecutorPool;
     private final BlockingQueue<StockSnapshot> queue;
     private final List<SnapshotConsumer> consumerList;
     private final List<SnapshotProducer> producerList;
-
+    private final TimeMonitor timeMonitor = new TimeMonitor();
 
     public TaskManager(List<String> symbolList, RedisService redisService){
-        this.executorPool = ThreadPoolProducer.produceMainTheadPool();
+        this.producerExecutorPool = ThreadPoolProducer.produceMainTheadPool();
         this.consumerExecutorPool = ThreadPoolProducer.produceCusumerTheadPool();
         this.queue = new LinkedBlockingQueue<>();
         this.redisService = redisService;
@@ -40,10 +46,12 @@ public class TaskManager implements Runnable {
     }
 
     private void initConsumer(){
+
         for (int i = 0; i < CONSUMER_NUMBER; i++) {
             SnapshotConsumer snapshotConsumer = new SnapshotConsumer(queue, redisService);
             consumerList.add(snapshotConsumer);
         }
+
     }
 
     @SneakyThrows
@@ -55,7 +63,7 @@ public class TaskManager implements Runnable {
 
             SnapshotProducer snapshotProducer = new SnapshotProducer(queue, subTaskList);
             System.out.println("init producer: " + subTaskList.size());
-            sleep(50);
+            sleep(100);
             producerList.add(snapshotProducer);
             if (startIndex+PRODUCER_ITEM_NUMBER >= totalNum){
                 break;
@@ -66,7 +74,9 @@ public class TaskManager implements Runnable {
 
     private List<TaskExecutor> taskExecutorProducer(){
         List<String> symbolList = new ArrayList<>(symbolSet);
+
         int taskPages = (int)Math.ceil(1.0 * symbolList.size() / TASK_MAX_COMPANY_NUMBER);
+        log.info("TaskExecutor sum num: {}", taskPages);
         List<TaskExecutor> taskExecutors = new ArrayList<>(taskPages);
         for (int i = 0; i < taskPages; i++) {
             int endIndex = Math.min(symbolList.size(),(i+1) * TASK_MAX_COMPANY_NUMBER );
@@ -76,15 +86,17 @@ public class TaskManager implements Runnable {
         return taskExecutors;
     }
 
-
+    @SneakyThrows
     @Override
     public void run() {
         System.out.println(this.getClass().getName() + "start");
         for(SnapshotConsumer consumer: consumerList){
+            sleep(300);
             consumerExecutorPool.execute(consumer);
         }
         for (SnapshotProducer producer: producerList){
-            executorPool.execute(producer);
+            sleep(300);
+            producerExecutorPool.execute(producer);
         }
     }
 }
