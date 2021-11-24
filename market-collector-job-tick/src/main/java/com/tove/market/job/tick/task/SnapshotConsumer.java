@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SnapshotConsumer implements Runnable{
     public volatile static ConcurrentHashMap<String, StockSnapshot> lastTickMap = new ConcurrentHashMap(5000);
     public volatile static  ConcurrentHashMap<String, List<StockSnapshot>> tempSnapshot = new ConcurrentHashMap<>(5000);
-    public final static Integer batchSize = 1;
+    public final static Integer batchSize = 10;
     private volatile boolean isRunning = true;
     private final BlockingQueue<StockSnapshot> queue;
     private final RedisService redisService;
@@ -62,7 +62,7 @@ public class SnapshotConsumer implements Runnable{
     private boolean canStore(StockSnapshot item){
         if (lastTickMap.containsKey(item.getCode())){
             StockSnapshot lastSsp = lastTickMap.get(item.getCode());
-            System.out.println(item.getCode() + " " + item.getSymbol() + " " + lastSsp.getTime() + " " + item.getTime());
+            //System.out.println(item.getCode() + " " + item.getSymbol() + " " + lastSsp.getTime() + " " + item.getTime());
             if (lastSsp.getTime().equals(item.getTime())){
                 return false;
             }

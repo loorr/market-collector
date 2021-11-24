@@ -56,6 +56,23 @@ public class RedisService {
         rQueue.addAll(tickList);
     }
 
+
+//    public void addStockSnapShotProBuff(List<StockSnapshot> stockSnapshotList){
+//        if (stockSnapshotList == null || stockSnapshotList.isEmpty()){
+//            return;
+//        }
+//        StockSnapshot ssp = stockSnapshotList.get(0);
+//        String[] dateTime = ssp.getTime().split("\\s+");
+//        String key = getKey(TICK_DATE_SYMBOL,  dateTime[0], ssp.getCode());
+//
+//        List<TickSnapshot> tickList = stockSnapshotList.stream().map(o->
+//                TickSnapshot.covertStockToTick(o)
+//        ).collect(Collectors.toList());
+//
+//        RQueue<TickSnapshot> rQueue = redisClient.getQueue(key);
+//        rQueue.addAll(tickList);
+//    }
+
     // TODO
     public List<StockSnapshot> getAllLastSnapshot(){
         //
