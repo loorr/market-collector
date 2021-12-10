@@ -30,6 +30,8 @@ public class TaskManager implements Runnable {
     private final List<SnapshotConsumer> consumerList;
     private final List<SnapshotProducer> producerList;
     private final TimeMonitor timeMonitor = new TimeMonitor();
+    public static boolean isRunning = true;
+    public static long sleepTime = 0;
 
     public TaskManager(List<String> symbolList, RedisService redisService){
         this.producerExecutorPool = ThreadPoolProducer.produceMainTheadPool();
@@ -46,12 +48,10 @@ public class TaskManager implements Runnable {
     }
 
     private void initConsumer(){
-
         for (int i = 0; i < CONSUMER_NUMBER; i++) {
             SnapshotConsumer snapshotConsumer = new SnapshotConsumer(queue, redisService);
             consumerList.add(snapshotConsumer);
         }
-
     }
 
     @SneakyThrows
@@ -98,17 +98,14 @@ public class TaskManager implements Runnable {
             consumerExecutorPool.execute(consumer);
         }
         while (true){
+
             for (SnapshotProducer producer: producerList){
-                //System.out.println("before start : " + producer.getName());
                 if (!producer.checkCanGet()){
                     continue;
                 }
-                // sleep(700/producerList.size());
-                //System.out.println("start : " + producer.getName());
                 producerExecutorPool.execute(producer);
             }
             sleep(300);
         }
-
     }
 }

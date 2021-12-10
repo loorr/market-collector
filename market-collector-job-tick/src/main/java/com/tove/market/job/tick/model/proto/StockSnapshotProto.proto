@@ -26,6 +26,6 @@ message Tick {
 message OrderBook {
   repeated double bid = 1;
   repeated double ask = 2;
-  repeated double askVol = 3;
-  repeated double bidVol = 4;
+  repeated int64 askVol = 3;
+  repeated int64 bidVol = 4;
 }

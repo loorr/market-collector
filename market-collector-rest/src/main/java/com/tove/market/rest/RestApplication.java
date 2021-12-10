@@ -20,7 +20,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication(scanBasePackages = {"com.tove.market","com.tove.market.dao.major"})
 public class RestApplication {
     public static void main(String[] args) {
-        System.setProperty("eureka.instance.ip-address","1.1.1.1");
         SpringApplication.run(RestApplication.class,args);
     }
 }

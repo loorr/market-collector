@@ -1,13 +1,13 @@
 package com.tove.market.job.tick.model;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 @Data
+@Builder
 @EqualsAndHashCode
 public class StockSnapshot implements Serializable {
     /** 方向 */
@@ -92,20 +92,20 @@ public class StockSnapshot implements Serializable {
                 )
                 .addAllBidVol(
                         new ArrayList(){{
-                            add(ss.getBidvol1());
-                            add(ss.getBidvol2());
-                            add(ss.getBidvol3());
-                            add(ss.getBidvol4());
-                            add(ss.getBidvol5());
+                            add((long)ss.getBidvol1());
+                            add((long)ss.getBidvol2());
+                            add((long)ss.getBidvol3());
+                            add((long)ss.getBidvol4());
+                            add((long)ss.getBidvol5());
                         }}
                 )
                 .addAllAskVol(
                         new ArrayList(){{
-                            add(ss.getAskvol1());
-                            add(ss.getAskvol2());
-                            add(ss.getAskvol3());
-                            add(ss.getAskvol4());
-                            add(ss.getAskvol5());
+                            add((long)ss.getAskvol1());
+                            add((long)ss.getAskvol2());
+                            add((long)ss.getAskvol3());
+                            add((long)ss.getAskvol4());
+                            add((long)ss.getAskvol5());
                         }}
                 )
                 .build();
@@ -134,10 +134,5 @@ public class StockSnapshot implements Serializable {
         return tick;
     }
 
-    public static void main(String[] args) {
-        StockSnapshot snapshot = new StockSnapshot();
-        snapshot.setAsk1(1.00);
 
-        System.out.println(snapshot.toString());
-    }
 }
