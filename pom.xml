@@ -24,6 +24,7 @@
         <module>market-collector-dao-major</module>
         <module>market-collector-dao-temp</module>
         <module>market-collector-common</module>
+        <module>market-collector-tushare</module>
     </modules>
 
     <properties>
