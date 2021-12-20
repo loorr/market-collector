@@ -1,6 +1,7 @@
 package com.tove.market.tushare.service;
 
-public interface DayDataService {
+
+public interface DayDataService  {
 
     void synAllDaliyData();
 

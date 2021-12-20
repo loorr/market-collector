@@ -2,6 +2,8 @@ package com.tove.market.tushare.request;
 
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * @author user
  */
@@ -11,6 +13,6 @@ public class TushareParamsRet {
 
     private String api_name;
     private String token = PRIVATE_TOKEN;
-    private String params;
+    private Map<String,String> params;
     private String fields="";
 }

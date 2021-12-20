@@ -2,7 +2,10 @@ package com.tove.market.tushare.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -11,6 +14,7 @@ import java.util.Date;
  * @author user
  */
 @Data
+@NoArgsConstructor
 public class StockBasic  {
 
     /**
@@ -42,17 +46,17 @@ public class StockBasic  {
     /**
      * 股票全称
      */
-    private String fullName;
+    private String fullname;
 
     /**
      * 英文全称
      */
-    private String enName;
+    private String enname;
 
     /**
      * 拼音缩写
      */
-    private String cnSpell;
+    private String cnspell;
 
     /**
      * 市场类型
@@ -89,5 +93,4 @@ public class StockBasic  {
      */
     private String isHs;
 
-    public StockBasic() {}
 }

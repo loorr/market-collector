@@ -1,11 +1,13 @@
 package com.tove.market.tushare.request;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class TushareResult<T> {
+@NoArgsConstructor
+public class TushareResult {
     private String request_id;
     private Integer code;
     private String msg;
-    private T data;
+    private ResultData data;
 }
