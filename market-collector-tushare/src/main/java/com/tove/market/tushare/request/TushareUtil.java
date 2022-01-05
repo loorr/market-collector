@@ -9,6 +9,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TushareUtil {
+
+    public static List<HashMap<String, Object>>  converTushareResult(List<TushareResult> tushareResultList){
+        List<HashMap<String, Object>> ans = new ArrayList<>();
+        for (TushareResult tushareResult: tushareResultList){
+            ans.addAll(converTushareResult(tushareResult));
+        }
+        return ans;
+    }
+
     public static List<HashMap<String, Object>>  converTushareResult(TushareResult tushareResult){
         List<String> fileds = lowerUnderscoreToLowerCamel(tushareResult.getData().getFields());
         List<JSONArray> data = tushareResult.getData().getItems();

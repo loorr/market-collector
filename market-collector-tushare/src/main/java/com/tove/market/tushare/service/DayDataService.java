@@ -1,7 +1,10 @@
 package com.tove.market.tushare.service;
 
 
-public interface DayDataService  {
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.tove.market.tushare.model.DayData;
+
+public interface DayDataService extends IService<DayData> {
 
     void synAllDaliyData();
 

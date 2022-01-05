@@ -1,24 +1,20 @@
 package com.tove.market.tushare.request;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author user
@@ -49,7 +45,7 @@ public class TushareApi {
             HttpEntity httpEntity = response.getEntity();
             result = EntityUtils.toString(httpEntity, Charset.forName("UTF-8"));
             TushareResult tushareResult = JSON.parseObject(result, TushareResult.class);
-            return tushareResult;
+            return checkResult(tushareResult);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -65,7 +61,22 @@ public class TushareApi {
         return doPost(ret);
     }
 
-    public TushareResult getDailyData(){
+    public TushareResult getDailyData(String tsCode, String startDate, String endDate){
+        TushareParamsRet ret = new TushareParamsRet();
+        ret.setApi_name(ApiNameEnum.DAILY.getName());
+        Map<String,String> params = new HashMap<>();
+        params.put("ts_code", tsCode);
+        params.put("start_date", startDate);
+        params.put("end_date", endDate);
+        ret.setParams(params);
+        return doPost(ret);
+    }
+
+    private TushareResult checkResult(TushareResult tushareResult ){
+        if (tushareResult.getCode() == 0){
+            return tushareResult;
+        }
+        System.out.printf("TushareResult Error: " + tushareResult.getMsg());
         return null;
     }
 }

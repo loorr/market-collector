@@ -35,11 +35,11 @@ CREATE TABLE `day_data` (
 `high` decimal(6, 2) NOT NULL COMMENT '最高价',
 `low` decimal(6, 2) NOT NULL COMMENT '最低价',
 `close` decimal(6, 2) NOT NULL COMMENT '收盘价',
-`pre_close` decimal(6, 2) NOT NULL COMMENT '昨收价',
+`pre_close` decimal(6, 2)  NULL COMMENT '昨收价',
 `change` decimal(6, 2) NOT NULL COMMENT '涨跌额',
-`pct_chg` decimal(6, 6) NOT NULL COMMENT '涨跌幅',
+`pct_chg` decimal(10, 6) NOT NULL COMMENT '涨跌幅',
 `vol` decimal(15, 2) NOT NULL COMMENT '成交量',
-`amount` decimal(15, 2) NOT NULL COMMENT '成交额',
+`amount` decimal(20, 4) NOT NULL COMMENT '成交额',
 unique INDEX `uniq_symbol_date` (`symbol`, `trade_date`) USING BTREE,
 PRIMARY KEY(`id`)
 ) ENGINE=InnoDB COMMENT = '日线行情数据';

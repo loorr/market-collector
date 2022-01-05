@@ -44,7 +44,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.0.5</version>
+            <version>3.5.0</version>
         </dependency>
 
         <dependency>
@@ -53,18 +53,17 @@
         </dependency>
 
         <!--shardingsphere start-->
-        <!-- for spring boot -->
         <dependency>
-            <groupId>org.inurl.shardingsphere</groupId>
+            <groupId>org.apache.shardingsphere</groupId>
             <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-            <version>4.1.0</version>
+            <version>4.0.0-RC1</version>
         </dependency>
-        <!-- for spring namespace -->
-<!--        <dependency>-->
-<!--            <groupId>io.shardingsphere</groupId>-->
-<!--            <artifactId>sharding-jdbc-spring-namespace</artifactId>-->
-<!--            <version>4.1.1</version>-->
-<!--        </dependency>-->
+
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.7.2</version>
+        </dependency>
         <!--shardingsphere end-->
         <dependency>
             <groupId>com.alibaba</groupId>
