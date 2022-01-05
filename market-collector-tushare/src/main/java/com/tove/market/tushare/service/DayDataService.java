@@ -8,4 +8,6 @@ public interface DayDataService extends IService<DayData> {
 
     void synAllDaliyData();
 
+    boolean checkLastStockDate(String symbol);
+
 }

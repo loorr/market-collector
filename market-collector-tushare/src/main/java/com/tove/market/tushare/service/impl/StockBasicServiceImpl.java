@@ -1,6 +1,7 @@
 package com.tove.market.tushare.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tove.market.tushare.dao.StockBasicMapper;
 import com.tove.market.tushare.model.StockBasic;
@@ -9,6 +10,7 @@ import com.tove.market.tushare.request.TushareResult;
 import com.tove.market.tushare.service.StockBasicService;
 import org.springframework.stereotype.Service;
 
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +22,7 @@ public class StockBasicServiceImpl extends ServiceImpl<StockBasicMapper, StockBa
 
     private TushareApi tushareApi = new TushareApi();
 
-    public void synAllDaliyData() {
+    public void synAllDaliyData() throws SocketTimeoutException {
         TushareResult result = tushareApi.getStockBasic();
         if (result == null){
             return;
@@ -30,5 +32,13 @@ public class StockBasicServiceImpl extends ServiceImpl<StockBasicMapper, StockBa
                 .map(o-> JSON.parseObject(JSON.toJSONString(o), StockBasic.class))
                 .collect(Collectors.toList());
         this.saveBatch(stockBasicList);
+    }
+
+
+    @Override
+    public List<StockBasic> getAllListStockInfo(){
+        LambdaQueryWrapper<StockBasic> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(StockBasic::getListStatus,"L");
+        return this.list(wrapper);
     }
 }

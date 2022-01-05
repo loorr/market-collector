@@ -62,3 +62,16 @@ unique INDEX `uniq_symbol_date` (`symbol`, `trade_date`) USING BTREE,
 PRIMARY KEY(`id`)
 ) ENGINE=InnoDB COMMENT = '周线行情数据';
 
+CREATE TABLE `syn_task` (
+    `id` BIGINT(20) UNSIGNED auto_increment COMMENT '主键',
+    `name` VARCHAR(20) NOT NULL COMMENT '任务标识',
+    `type` VARCHAR(20) NOT NULL COMMENT '任务类型',
+    `start_time` datetime null COMMENT '开始时间',
+    `end_time` datetime null COMMENT '结束时间',
+    `state` VARCHAR(20) NULL COMMENT '任务状态',
+    `error_log` VARCHAR(255) NULL COMMENT '错误信息',
+    unique INDEX `uniq_name_type` (`name`, `type`) USING BTREE,
+    PRIMARY KEY(`id`)
+)  ENGINE=InnoDB COMMENT = '任务日志';
+
+

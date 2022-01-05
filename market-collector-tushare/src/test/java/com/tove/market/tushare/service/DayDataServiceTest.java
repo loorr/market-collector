@@ -1,5 +1,6 @@
 package com.tove.market.tushare.service;
 
+import com.tove.market.tushare.service.impl.DayDataServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,9 @@ class DayDataServiceTest {
     @Resource
     private DayDataService dayDataService;
 
+    @Resource
+    private DayDataServiceImpl dayDataServiceImpl;
+
     @BeforeEach
     void setUp() {
     }
@@ -25,5 +29,10 @@ class DayDataServiceTest {
     @Test
     void synAllDaliyData() {
         dayDataService.synAllDaliyData();
+    }
+
+    @Test
+    void deleteDataTest(){
+        dayDataServiceImpl.deleteBySymbol("000014");
     }
 }

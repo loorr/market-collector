@@ -12,6 +12,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,10 +25,10 @@ public class TushareApi {
 
     private static final CloseableHttpClient HTTP_CLIENT = HttpClients.createDefault();
     private static final RequestConfig REQUEST_CONFIG = RequestConfig.custom()
-                                                        .setConnectTimeout(3 * 1000)
-                                                        .setSocketTimeout(10 * 1000).build();
+                                                        .setConnectTimeout(5 * 1000)
+                                                        .setSocketTimeout(20 * 1000).build();
 
-    private TushareResult doPost(TushareParamsRet tushareParamsRet){
+    private TushareResult doPost(TushareParamsRet tushareParamsRet) throws SocketTimeoutException {
         HttpPost httpPost = new HttpPost(TARGET_URL);
         httpPost.setHeader("Content-type","application/json; charset=utf-8");
         httpPost.setHeader("Accept", "application/json");
@@ -46,14 +47,16 @@ public class TushareApi {
             result = EntityUtils.toString(httpEntity, Charset.forName("UTF-8"));
             TushareResult tushareResult = JSON.parseObject(result, TushareResult.class);
             return checkResult(tushareResult);
-        } catch (IOException e) {
+        } catch (SocketTimeoutException e){
+            throw e;
+        } catch (IOException  e) {
             e.printStackTrace();
         }
         return null;
     }
 
 
-    public TushareResult getStockBasic(){
+    public TushareResult getStockBasic() throws SocketTimeoutException {
         TushareParamsRet ret = new TushareParamsRet();
         ret.setApi_name(ApiNameEnum.STOCK_BASE.getName());
         ret.setParams(new HashMap<>());
@@ -61,7 +64,7 @@ public class TushareApi {
         return doPost(ret);
     }
 
-    public TushareResult getDailyData(String tsCode, String startDate, String endDate){
+    public TushareResult getDailyData(String tsCode, String startDate, String endDate) throws SocketTimeoutException {
         TushareParamsRet ret = new TushareParamsRet();
         ret.setApi_name(ApiNameEnum.DAILY.getName());
         Map<String,String> params = new HashMap<>();
