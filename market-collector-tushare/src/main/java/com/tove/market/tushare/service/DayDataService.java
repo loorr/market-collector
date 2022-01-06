@@ -10,4 +10,5 @@ public interface DayDataService extends IService<DayData> {
 
     boolean checkLastStockDate(String symbol);
 
+    void synDailyDataByDate(String startDate, String endDate);
 }

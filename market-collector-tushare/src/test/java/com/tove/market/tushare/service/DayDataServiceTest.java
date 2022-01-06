@@ -35,4 +35,14 @@ class DayDataServiceTest {
     void deleteDataTest(){
         dayDataServiceImpl.deleteBySymbol("000014");
     }
+
+    @Test
+    void  synDailyDataByDateTest(){
+        dayDataServiceImpl.synDailyDataByDate("20220105","20220105");
+    }
+
+    @Test
+    void deleteByDate(){
+        dayDataServiceImpl.deleteByDate("2022-01-05");
+    }
 }

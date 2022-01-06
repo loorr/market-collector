@@ -1,5 +1,8 @@
 package com.tove.market.tushare.common;
 
+import lombok.extern.slf4j.Slf4j;
+
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -8,11 +11,15 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+@Slf4j
 public class DateUtil {
     public static final String PATTERN_YYYY_MM_DD = "yyyy-MM-dd";
+    public static final String PATTERN_YYYY_MM_DD_NO_BLANK = "yyyyMMdd";
 
     public static Boolean isDateVail(String date, String patten) {
         DateTimeFormatter format = new DateTimeFormatterBuilder()
@@ -26,7 +33,6 @@ public class DateUtil {
         }
         return flag;
     }
-
 
     public static String formatDate(Date date, String patten){
         SimpleDateFormat sdf = new SimpleDateFormat(patten);
@@ -83,6 +89,29 @@ public class DateUtil {
                 .toLocalDateTime();
     }
 
+    public static List<String> getBetweenDateStrList(String startDate, String endDate, String patten){
+        Date start = formatDate(startDate, patten);
+        Date end = formatDate(endDate, patten);
+        if (end.before(start)){
+            log.error("input date rank error! start: {}, end: {}", startDate, endDate);
+            return null;
+        }
+
+        List<String> list = new ArrayList<>();
+        // 用Calendar 进行日期比较判断
+        SimpleDateFormat sdf = new SimpleDateFormat(patten);
+        Calendar calendar = Calendar.getInstance();
+        while (start.getTime()<=end.getTime()){
+            list.add(sdf.format(start));
+            calendar.setTime(start);
+            calendar.add(Calendar.DATE, 1);
+            start=calendar.getTime();
+        }
+        return list;
+    }
+
+
+
     public static void main(String[] args) {
         System.out.println(isDateVail("2021-09-12", PATTERN_YYYY_MM_DD));
         System.out.println(formatDate(new Date(), PATTERN_YYYY_MM_DD));
@@ -94,5 +123,7 @@ public class DateUtil {
         );
         System.out.printf(String.valueOf(diff));
 
+        List<String> days = getBetweenDateStrList("20211209", "20220101", PATTERN_YYYY_MM_DD_NO_BLANK);
+        log.info("end");
     }
 }

@@ -1,5 +1,6 @@
 package com.tove.market.tushare.request;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.CaseFormat;
 
@@ -9,6 +10,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TushareUtil {
+
+    public static <T> List<T> converTushareResult(List<TushareResult> tushareResultList, Class<T> clazz){
+        List<HashMap<String, Object>> list = converTushareResult(tushareResultList);
+        List<T> result = list.stream().map(o->{
+            T t = JSON.parseObject(JSON.toJSONString(o), clazz);
+            return t;
+        }).collect(Collectors.toList());
+        return  result;
+    }
 
     public static List<HashMap<String, Object>>  converTushareResult(List<TushareResult> tushareResultList){
         List<HashMap<String, Object>> ans = new ArrayList<>();

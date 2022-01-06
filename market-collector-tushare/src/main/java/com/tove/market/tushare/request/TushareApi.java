@@ -75,6 +75,15 @@ public class TushareApi {
         return doPost(ret);
     }
 
+    public TushareResult getDailyData(String tradeDate) throws SocketTimeoutException {
+        TushareParamsRet ret = new TushareParamsRet();
+        ret.setApi_name(ApiNameEnum.DAILY.getName());
+        Map<String,String> params = new HashMap<>();
+        params.put("trade_date", tradeDate);
+        ret.setParams(params);
+        return doPost(ret);
+    }
+
     private TushareResult checkResult(TushareResult tushareResult ){
         if (tushareResult.getCode() == 0){
             return tushareResult;
