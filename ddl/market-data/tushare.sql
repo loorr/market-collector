@@ -28,21 +28,22 @@ CREATE TABLE `stock_basic` (
 ) ENGINE=InnoDB COMMENT = '基础信息';
 
 CREATE TABLE `day_data` (
-`id` BIGINT(20) UNSIGNED auto_increment COMMENT '主键',
-`symbol` VARCHAR(20) NOT NULL COMMENT '股票代码',
-`trade_date` DATE NOT NULL COMMENT '交易日期',
-`open` decimal(6, 2) NOT NULL COMMENT '开盘价',
-`high` decimal(6, 2) NOT NULL COMMENT '最高价',
-`low` decimal(6, 2) NOT NULL COMMENT '最低价',
-`close` decimal(6, 2) NOT NULL COMMENT '收盘价',
-`pre_close` decimal(6, 2)  NULL COMMENT '昨收价',
-`change` decimal(6, 2) NOT NULL COMMENT '涨跌额',
-`pct_chg` decimal(10, 6) NOT NULL COMMENT '涨跌幅',
-`vol` decimal(15, 2) NOT NULL COMMENT '成交量',
-`amount` decimal(20, 4) NOT NULL COMMENT '成交额',
-unique INDEX `uniq_symbol_date` (`symbol`, `trade_date`) USING BTREE,
-PRIMARY KEY(`id`)
-) ENGINE=InnoDB COMMENT = '日线行情数据';
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `symbol` varchar(20) NOT NULL COMMENT '股票代码',
+  `trade_date` date NOT NULL COMMENT '交易日期',
+  `open` decimal(6,2) NOT NULL COMMENT '开盘价',
+  `high` decimal(6,2) NOT NULL COMMENT '最高价',
+  `low` decimal(6,2) NOT NULL COMMENT '最低价',
+  `close` decimal(6,2) NOT NULL COMMENT '收盘价',
+  `pre_close` decimal(6,2) DEFAULT NULL COMMENT '昨收价',
+  `change_price` decimal(6,2) NOT NULL COMMENT '涨跌额',
+  `pct_chg` decimal(10,6) NOT NULL COMMENT '涨跌幅',
+  `vol` decimal(15,2) NULL COMMENT '成交量',
+  `amount` decimal(20,5) NULL COMMENT '成交额',
+  `back_adjust` decimal(10,5) NOT NULL COMMENT '后复权因子',
+  `font_adjust` decimal(10,5) NOT NULL COMMENT '前复权因子',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4  COMMENT='日线行情数据'
 
 
 CREATE TABLE `week_data` (

@@ -38,11 +38,11 @@ class DayDataServiceTest {
 
     @Test
     void  synDailyDataByDateTest(){
-        dayDataServiceImpl.synDailyDataByDate("20220105","20220105");
+        dayDataServiceImpl.synDailyDataByDate("20220107","20220107");
     }
 
     @Test
     void deleteByDate(){
-        dayDataServiceImpl.deleteByDate("2022-01-05");
+        dayDataServiceImpl.deleteByDate("2022-01-07");
     }
 }
