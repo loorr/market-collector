@@ -3,7 +3,7 @@ CREATE TABLE `trade_cal` (
  `exchange` VARCHAR(63) NOT NULL COMMENT '交易所',
  `cal_date` DATE NOT NULL COMMENT '交易日期',
  `is_open` tinyint(1) NOT NULL COMMENT '是否开盘',
- `pretrade_date` DATE NULL COMMENT '前一个交易日'
+ `pretrade_date` DATE NULL COMMENT '前一个交易日',
  PRIMARY KEY(`id`)
 ) ENGINE=InnoDB COMMENT = '交易日历';
 
