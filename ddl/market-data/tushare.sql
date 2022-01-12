@@ -40,8 +40,8 @@ CREATE TABLE `day_data` (
   `pct_chg` decimal(10,6) NOT NULL COMMENT '涨跌幅',
   `vol` decimal(15,2) NULL COMMENT '成交量',
   `amount` decimal(20,5) NULL COMMENT '成交额',
-  `back_adjust` decimal(10,5) NOT NULL COMMENT '后复权因子',
-  `font_adjust` decimal(10,5) NOT NULL COMMENT '前复权因子',
+  `back_adjust` decimal(10,5)  NULL COMMENT '后复权因子',
+  `font_adjust` decimal(10,5)  NULL COMMENT '前复权因子',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4  COMMENT='日线行情数据'
 
