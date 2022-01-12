@@ -43,7 +43,7 @@ CREATE TABLE `day_data` (
   `back_adjust` decimal(10,5)  NULL COMMENT '后复权因子',
   `font_adjust` decimal(10,5)  NULL COMMENT '前复权因子',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4  COMMENT='日线行情数据'
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4  COMMENT='日线行情数据';
 
 
 CREATE TABLE `week_data` (
